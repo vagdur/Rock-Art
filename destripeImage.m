@@ -1,7 +1,9 @@
-function outim=destripeImage(im,magnitude,fullAuto)
+function outim=destripeImage(im,magnitude,fullAuto,withmask,mask)
     if (nargin < 3)
         magnitude = 2500;
         fullAuto = 0;
+        withmask = 0;
+        mask = true(size(im));
     end
     if fullAuto == 0
         has_angle = 0;
@@ -10,7 +12,11 @@ function outim=destripeImage(im,magnitude,fullAuto)
             if method{1} == 'M'
                 close all
                 warning('off','images:initSize:adjustingMag');
-                imshow(im);
+                if withmask
+                    imshow(applyImMask(im,mask));
+                else
+                    imshow(im);
+                end
                 disp('Please click on two points on one stripe to identify the direction of striation.');
                 [x, y] = ginput(2);
                 close all
@@ -30,6 +36,6 @@ function outim=destripeImage(im,magnitude,fullAuto)
     
     disp('Destriating image...');
     tic
-    outim = destriateAngle(im,angle,magnitude);
+    outim = destriateAngle(im,angle,magnitude,withmask,mask);
     toc
     
