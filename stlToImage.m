@@ -1,8 +1,8 @@
-function [image,convhull]=stlToImage(filepath)
+function [image,convhull,dmask]=stlToImage(filepath)
     disp(['Loading ',filepath,'...']);
     tic
     [~,pc] = stlread(filepath);
     pc = unique(pc,'rows');
-    [image,convhull] = csvToImage(pc,1);
+    [image,convhull,dmask] = csvToImage(pc,1);
     toc
     beep

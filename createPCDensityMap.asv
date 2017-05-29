@@ -1,0 +1,10 @@
+function densmap=createPCDensityMap(pc)
+    pc = pc - min(pc) + 1;
+    maxs = ceil(max(pc));
+    xmax = maxs(1); ymax = maxs(2);
+    densmap = false([xmax ymax]);
+    
+    for i = 1:1:size(pc,1)
+        densmap(round(pc(i,1)),round(pc(i,2))) = densmap(round(pc(i,1)),round(pc(i,2))) + 1;
+    end
+    
