@@ -6,9 +6,11 @@ function outim=cleanImage(inim,iqrthresh,gaussfilt)
         gaussfilt = 400;
     end
     outim=inim;
-    outim(outim>iqrthresh) = iqrthresh;
-    outim(outim<(-iqrthresh)) = -iqrthresh;
-    outim = (outim+iqrthresh)/(2*iqrthresh);
+    if (iqrthresh > 0)
+        outim(outim>iqrthresh) = iqrthresh;
+        outim(outim<(-iqrthresh)) = -iqrthresh;
+        outim = (outim+iqrthresh)/(2*iqrthresh);
+    end
     if (gaussfilt>0)
         imblur = imgaussfilt(outim,gaussfilt);
         hpf = outim-imblur;
