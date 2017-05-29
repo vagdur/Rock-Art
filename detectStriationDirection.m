@@ -9,6 +9,7 @@ function angle=detectStriationDirection(im)
     peaks = peaks(:,2);
     peaks(peaks>90) = 180 - peaks(peaks>90);
     angle = mod(mean(peaks),180);
+    disp(['Detected striation angle: ',num2str(round(angle,3))]);
     toc
     
     

@@ -14,7 +14,8 @@ function outim=destripeImage(im,magnitude,fullAuto)
                 disp('Please click on two points on one stripe to identify the direction of striation.');
                 [x, y] = ginput(2);
                 close all
-                angle = atan2(y(2)-y(1),x(2)-x(1))*2*pi;
+                angle = -atan2(y(2)-y(1),x(2)-x(1))*360/(2*pi);
+                disp(['Identified striation angle: ',num2str(round(angle,3))]);
                 has_angle = 1;
             elseif method{1} == 'A'
                 angle = detectStriationDirection(im);
@@ -29,8 +30,6 @@ function outim=destripeImage(im,magnitude,fullAuto)
     
     disp('Destriating image...');
     tic
-    filtim = imfilter(im, fspecial('motion',magnitude,angle), 'replicate');
-    outim = im-filtim;
-    outim = (outim - min(outim(:)))/range(outim(:));
+    outim = destriateAngle(im,angle,magnitude);
     toc
     
